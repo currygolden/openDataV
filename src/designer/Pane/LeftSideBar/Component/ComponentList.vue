@@ -30,6 +30,7 @@ const menuOptions = computed<MenuOption[]>(() => {
     groups[group].push(component)
   })
   const menus: MenuOption[] = []
+
   ComponentGroupList.forEach((item: GroupType) => {
     menus.push({
       label: () => item.name,

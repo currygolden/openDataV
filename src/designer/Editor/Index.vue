@@ -50,6 +50,20 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @description 中间渲染画布承载的逻辑
+ *  1. 渲染全局组件数组的数据
+ *  2. 每个组件包含容器组件（控制基础样式）以及一系列监听事件
+ *    2.1 组件拖动获取组件相对画布的二维坐标，组件重新定位
+ *    2.2 组件复制，粘贴
+ *    2.3 设计容器组件实现对元素的完全控制
+ *  3. 画布本身的canvas渲染
+ *    3.1 标尺
+ *    3.2 网格线距离划分，坐标轴模拟
+ *
+ *
+ *
+ **/
 import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import Ruler from '@/designer/Editor/Ruler.vue'
 import Area from '@/designer/Editor/Area.vue'
@@ -74,6 +88,7 @@ const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
 
+// 将数组内样式转为css规则，添加单位
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
@@ -82,6 +97,7 @@ const clearCanvas = () => {
   basicStore.clearCanvas()
 }
 
+// 粘贴事件来源：ctrl+v | 手动点击粘贴
 const paste = (_: HTMLElement, event: MouseEvent) => {
   const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
   const y = event.pageY - editorRectInfo.top
@@ -89,6 +105,7 @@ const paste = (_: HTMLElement, event: MouseEvent) => {
   copyStore.paste(true, x, y)
 }
 
+// 设置右键事件
 const contextmenus = (): ContextmenuItem[] => {
   return [
     {
@@ -107,10 +124,12 @@ const contextmenus = (): ContextmenuItem[] => {
 onMounted(() => {
   console.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
+  // 监听全局的CV事件
   document.addEventListener('paste', pasteComponent)
   document.addEventListener('copy', copyComponent)
 })
 
+// GC
 onUnmounted(() => {
   console.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
@@ -141,12 +160,13 @@ const bgStyle = computed<Recordable<string>>(() => {
   ])
 })
 
+// 复制当前组件
 const copyComponent = () => {
   if (basicStore.curComponent) {
     copyStore.copy(basicStore.curComponent)
   }
 }
-
+// 监听粘贴逻辑
 const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
@@ -174,7 +194,10 @@ const start = reactive<Vector>({
 
 const editor = ref<ElRef>(null)
 const isShowReferLine = ref<boolean>(true)
+
+// 画布内的点击，拖动逻辑是处理画布元素的核心
 const handleMouseDown = (e: MouseEvent) => {
+  console.log('eeee', e)
   // 阻止默认事件，防止拖拽时出现拖拽图标
   basicStore.setClickComponentStatus(false)
   e.preventDefault()
@@ -182,14 +205,18 @@ const handleMouseDown = (e: MouseEvent) => {
   composeStore.setHidden()
   // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
   const rectInfo = editor.value?.getBoundingClientRect()
+  console.log('rectInfo', rectInfo)
   editorX.value = rectInfo!.x
   editorY.value = rectInfo!.y
   const startX = e.clientX
   const startY = e.clientY
+  // 获取点击位置相对画布的二维坐标
   start.x = (startX - editorX.value) / basicStore.scale
   start.y = (startY - editorY.value) / basicStore.scale
 
+  // 监听画布内的拖动事件，计算元素新的几何位置
   const move = (moveEvent: MouseEvent) => {
+    console.log('moseMove', moveEvent)
     moveEvent.preventDefault()
     moveEvent.stopPropagation()
 

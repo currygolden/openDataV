@@ -32,11 +32,13 @@ const emit = defineEmits<{
   (e: 'update:showIndicator', showIndicator: boolean): void
   (e: 'update:valueNum', valueNum: number): void
 }>()
+// 定义canvas上下文
 const state = reactive({
   canvasContext: null as CanvasRenderingContext2D | null
 })
 let ratio = 1
 const canvas = ref<HTMLCanvasElement | null>(null)
+
 onMounted(() => {
   ratio = props.ratio || window.devicePixelRatio || 1
   initCanvasRef()

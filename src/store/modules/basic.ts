@@ -284,7 +284,7 @@ const useBasicStore = defineStore({
       return this.componentData.findIndex((item) => item.id === id)
     },
     /**
-     * 清空画布
+     * 清空画布，相关的全局状态
      */
     clearCanvas(): void {
       this.componentData = []

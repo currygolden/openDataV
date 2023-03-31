@@ -5,7 +5,7 @@ import type { BaseComponent } from '@/resource/models'
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
-
+// 按需加载组件资源，group|可用的组件库资源
 const AsyncComponent = {
   install: (app: App) => {
     // 注册Group组件
@@ -13,6 +13,7 @@ const AsyncComponent = {
     const AsyncComp = defineAsyncComponent(Group.component)
     app.component(Group.componentName, AsyncComp)
 
+    // 批量注册组件资源
     const moduleFilesTs: any = import.meta.glob('../resource/components/**/index.ts', {
       eager: true
     })

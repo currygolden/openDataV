@@ -17,7 +17,7 @@ const basicRoutes = [
     name: 'PageView',
     component: () => import('@/pages/PageView.vue'),
     meta: {
-      title: '页面',
+      title: '预览页面',
       ignoreAuth: true,
       hideInMenu: true
     }

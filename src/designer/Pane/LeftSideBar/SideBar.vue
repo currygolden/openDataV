@@ -67,11 +67,15 @@ withDefaults(
   }>(),
   { iscollapsed: false }
 )
+/**
+ * @description 收缩态点击逻辑
+ * 1.展开&获取当前一层tab
+ */
 const collapsedTabPane = (key: string) => {
   emits('update:iscollapsed', false)
   activeKey.value = key
 }
-
+// 最上层图标点击切换状态
 const switchTab = (key: string) => {
   activeKey.value = key
 }

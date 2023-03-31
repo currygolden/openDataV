@@ -9,6 +9,12 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @description 动态组件容器层
+ *
+ *
+ *
+ */
 import { getComponentStyle } from '@/utils/utils'
 import type { BaseComponent } from '@/resource/models'
 

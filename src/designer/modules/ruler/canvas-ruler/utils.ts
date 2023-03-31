@@ -10,6 +10,7 @@ const getGridSize = (scale: number) => {
 
 const FONT_SCALE = 0.83 // 10 / 12
 
+// 在canvas上画刻度尺
 export const drawCavaseRuler = (
   ctx: CanvasRenderingContext2D,
   start: number,
