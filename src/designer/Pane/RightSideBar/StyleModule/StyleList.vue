@@ -45,6 +45,7 @@ const styleKeys = computed(() => {
 
 // 样式页面改变，修改当前组件的样式：curComponent.style
 const changed = debounce((key: string, val: any) => {
+  console.log('ccuurreen', props.curComponent)
   if (props.curComponent) {
     const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
     if (locationKeys.includes(key)) {

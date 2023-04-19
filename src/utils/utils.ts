@@ -78,6 +78,7 @@ export const getComponentStyle = (component: BaseComponent) => {
  * @returns css
  */
 export const getComponentShapeStyle = (component: BaseComponent) => {
+  console.log('ccccc', component)
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {

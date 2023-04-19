@@ -40,8 +40,14 @@
           <x-icon name="page" />
           <span v-show="!iscollapsed">画布</span>
         </template>
+        <!-- 画布属性控制 -->
         <Canvas />
       </n-tab-pane>
+      <!-- <n-tab-pane name="canvas">
+        <template #tab>
+          <span v-show="!iscollapsed">拓展区域</span>
+        </template>
+      </n-tab-pane> -->
     </n-tabs>
   </div>
   <div v-else>
@@ -75,6 +81,8 @@ const emits = defineEmits<{
 }>()
 
 const curComponent = computed(() => basicStore.curComponent)
+console.log('current', curComponent)
+// 这里实际只有容器
 const menuOptions = computed<MenuOption[]>(() => {
   if (basicStore.curComponent) {
     return [

@@ -17,7 +17,7 @@ class BasicBarChartComponent extends BaseComponent {
       dataIntegrationMode: DataIntegrationMode.UNIVERSAL
     })
   }
-
+  // 这里可以看到组件与基类组件差别的自定义属性
   _prop: PropsType[] = [
     {
       label: '数据配置',

@@ -63,7 +63,7 @@ interface ArrayFormSchema extends BaseFormSchema {
   maxItem?: number
   minItem?: number
 }
-
+// 描述表单元素的属性描述，这里的scheme可以有效继承于组件库
 export interface AttrType {
   prop: string
   label: string

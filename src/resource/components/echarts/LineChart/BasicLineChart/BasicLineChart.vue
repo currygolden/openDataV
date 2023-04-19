@@ -1,5 +1,5 @@
 <template>
-  <div ref="chartEl" v-resize="resizeHandler"></div>
+  <div ref="chartEl" v-resize="resizeHandler" class="line-chart"></div>
 </template>
 
 <script setup lang="ts">

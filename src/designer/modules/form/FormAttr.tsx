@@ -1,3 +1,9 @@
+/**
+ * 1. 对于模版相对不固定如表单，table的场景，使用tsx组件灵活性更高
+ * 
+ * 
+ */
+
 import type { PropType } from 'vue'
 import { reactive, defineComponent, resolveComponent, h } from 'vue'
 import FontStyle from '../fontSytle'
@@ -29,6 +35,7 @@ import {
 } from 'naive-ui'
 
 export default defineComponent({
+  // 定义已注册的组件
   components: {
     FontStyle,
     FontWeight,
@@ -58,6 +65,7 @@ export default defineComponent({
       required: true
     }
   },
+  // 声明定义了哪些事件
   emits: ['change'],
   setup(props, { emit }) {
     const formData = reactive<Recordable>(props.data)
@@ -68,6 +76,7 @@ export default defineComponent({
 
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const renderItem = (item: AttrType) => {
+      // 哪些组件需要提供options
       const options: Recordable[] =
         (item.componentOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options ||
         []
@@ -188,6 +197,7 @@ export default defineComponent({
           )
       }
     }
+    // 这种写法对于表单的处理非常清晰
     return () => (
       <NForm size="small" labelPlacement="left" labelAlign="left">
         {props.children.map((item) => (

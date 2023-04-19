@@ -141,6 +141,7 @@ onUnmounted(() => {
 const componentData = computed(() => {
   return basicStore.componentData
 })
+console.log('ddddaaa', componentData)
 
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
@@ -195,7 +196,7 @@ const start = reactive<Vector>({
 const editor = ref<ElRef>(null)
 const isShowReferLine = ref<boolean>(true)
 
-// 画布内的点击，拖动逻辑是处理画布元素的核心
+// 画布内的点击，拖动逻辑，处理手动组合逻辑
 const handleMouseDown = (e: MouseEvent) => {
   console.log('eeee', e)
   // 阻止默认事件，防止拖拽时出现拖拽图标
@@ -228,7 +229,7 @@ const handleMouseDown = (e: MouseEvent) => {
     }
     const width = Math.abs(moveEvent.clientX - startX) / basicStore.scale
     const height = Math.abs(moveEvent.clientY - startY) / basicStore.scale
-
+    // 定义所画的组合区域
     composeStore.setPostion({ left: start.x, top: start.y, width, height })
   }
   const up = (UpMoveEvent: MouseEvent) => {
@@ -245,7 +246,7 @@ const handleMouseDown = (e: MouseEvent) => {
       right: composeStore.style.left + composeStore.style.width,
       bottom: composeStore.style.top + composeStore.style.height
     }
-
+    // 从选择区域里确定组合的组件
     composeStore.setSelectComponents(selectedRect)
   }
   document.addEventListener('mousemove', move)
@@ -271,11 +272,14 @@ const handleDrop = async (e) => {
   }
 }
 
+// 设置光标形状
 const handleDragOver = (e) => {
+  // console.log('eeaae11', e)
   e.preventDefault()
   e.dataTransfer.dropEffect = 'copy'
 }
 
+// 点击无组件区域，设置当前为空
 const deselectCurComponent = () => {
   if (!basicStore.isClickComponent) {
     basicStore.setCurComponent(undefined)

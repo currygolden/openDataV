@@ -1,4 +1,10 @@
-<!-- TODO: 这个页面后续将用 JSX 重构 -->
+<!-- TODO: 这个页面后续将用 JSX 重构 
+1. 这个组件用来控制中间的canvas容器各种样式属性
+2. 实现方式是动态表达，由于模版相对灵活，所以可以用jsx
+3. 属性的修改通过全局状态体现，对应修改中间画布的样式
+
+
+-->
 <template>
   <div class="attr-list">
     <n-scrollbar>
@@ -11,6 +17,7 @@
             @update:value="setScreenSize"
           />
         </n-form-item>
+        <!-- 简单表单渲染的例子，跟table条件展示比较类似 -->
         <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
           <n-input-number
             v-if="type === FormType.NUMBER"
@@ -23,6 +30,7 @@
             :modes="['hex', 'rgb', 'hsl']"
             @update:value="styleChange"
           />
+          <!-- 背景选择组件 -->
           <back-item
             v-else-if="type === FormType.BACKGROUND"
             v-model:value="canvasStyleFrom[key]"
@@ -59,6 +67,7 @@ const canvasStyleFrom = ref<CanvasStyleData>({
   background: basicStore.canvasStyleData.background
 })
 
+// 全局状态赋值表单数据，体现数据驱动
 const styleChange = () => {
   basicStore.setCanvasStyle(canvasStyleFrom.value)
 }

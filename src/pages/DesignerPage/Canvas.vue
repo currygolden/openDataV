@@ -88,6 +88,7 @@ const scrollbarStyle = computed(() => {
   }
 })
 
+// 处理视图的缩放
 const editorWindowResizeHandler = (entry: ResizeObserverEntry) => {
   const { width, height } = entry.contentRect
   windowWidth.value = width
@@ -105,7 +106,7 @@ const changeScale = debounce((value: number) => {
   scaleValue.value = value / 100
 }, 300)
 
-// region 按住 alt 或 command + 滚轮缩放
+// region 按住 alt 或 command + 滚轮缩放，处理多种缩放形式
 const centerCanvas = ref()
 function setScaleByWheel(e: WheelEvent) {
   const max = 200

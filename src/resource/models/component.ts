@@ -77,6 +77,7 @@ export abstract class BaseComponent {
     if (detail.icon) {
       this.icon = detail.icon
     }
+    // 每一个组件的config配置里会初始化positionStyle的属性，否则取默认值
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
     this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
@@ -118,6 +119,7 @@ export abstract class BaseComponent {
     return [common, ...this._prop]
   }
 
+  // 用来描述属性表单里与position相关的部分
   get styleFormValue(): PropsType[] {
     if (!this._style.find((item) => item.prop === 'position')) {
       const common: PropsType = {
@@ -293,6 +295,7 @@ export abstract class BaseComponent {
     }
   }
 
+  // 组件实例方法可以修改prop/style
   change(prop: string, value: string | number | boolean | any, form?: string) {
     const positionKey = ['top', 'left', 'height', 'width']
     if (positionKey.includes(prop)) {
