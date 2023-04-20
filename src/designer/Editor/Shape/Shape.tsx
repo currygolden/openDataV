@@ -13,6 +13,7 @@ import type { BaseComponent } from '@/resource/models'
 import styles from './shape.module.less'
 import { XIcon } from '@/plugins/xicon'
 
+// 函数式的组件好像用defineComponent偏多
 export default defineComponent({
   props: {
     active: {
@@ -27,6 +28,7 @@ export default defineComponent({
     defaultStyle: Object as PropType<ComponentStyle>,
     index: Number
   },
+  // 组合api入口
   setup(props, { slots }) {
     const basicStore = useBasicStoreWithOut()
     const composeStore = useComposeStoreWithOut()
@@ -135,6 +137,7 @@ export default defineComponent({
     const isError = ref<boolean>(false)
     const errorInfo = ref<string>('')
 
+    // 组件渲染出错的兜底逻辑
     onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: string) => {
       console.log(err)
       if (info === 'render function') {
@@ -403,9 +406,11 @@ export default defineComponent({
           }
         }
       })
+      console.log('outterresult', result)
       return result
     }
 
+    // 旋转状态分类
     const rotateClassName = computed(() => {
       const prefix = 'rotate-'
       const rotate = props.defaultStyle!.rotate
